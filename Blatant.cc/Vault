@@ -1,0 +1,310 @@
+-- blatant.cc
+ local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+ local Window = Rayfield:CreateWindow({
+ Name = "Welcome to Blatant.cc Vault",
+    Icon = 0, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
+    LoadingTitle = "Blatant.cc Loading Pls Wait 2 Sec",
+    LoadingSubtitle = "By RBLX_collector | Collectorking.",
+    theme = "Amethyst", -- Check https://docs.sirius.menu/rayfield/configuration/themes
+ 
+   DisableRayfieldPrompts = false,
+   DisableBuildWarnings = false, -- Prevents Rayfield from warning when the script has a version mismatch with the interface
+ 
+   ConfigurationSaving = {
+      Enabled = true,
+      FolderName = nil, -- Create a custom folder for your hub/game
+      FileName = "Blatant"
+   },
+ 
+   Discord = {
+      Enabled = enable, -- Prompt the user to join your Discord server if their executor supports it
+      Invite = "Rue8uYze6h", -- The Discord invite code, do not include discord.gg/. E.g. discord.gg/ ABCD would be ABCD
+      RememberJoins = true -- Set this to false to make them join the discord every time they load it up
+   },
+ 
+   KeySystem = false, -- Set this to true to use our key system
+   KeySettings = {
+      Title = "BLATANT.cc vault",
+      Subtitle = "Key System",
+      Note = "updateing key sometimes", -- Use this to tell the user how to get a key
+      FileName = "Key", -- It is recommended to use something unique as other scripts using Rayfield may overwrite your key file
+      SaveKey = false, -- The user's key will be saved, but if you change the key, they will be unable to use your script
+      GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
+      Key = {"ABC","Frogot"} -- List of keys that will be acc--blatant.ccepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
+   }
+ })
+ 
+-- tabs  |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+ local PC = Window:CreateTab("Pc | Locks", 4483362458)
+ local Mobile = Window:CreateTab("Mobile | Locks", 4483362458)
+ local exe = Window:CreateTab("Exectutors | ", 4483362458)
+ local FE = Window:CreateTab("Features | ", 4483362458)
+ local CR = Window:CreateTab("Credits | ", 4483362458)
+ 
+-- PC |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+ 
+ local Button = PC:CreateButton({
+    Name = "azure modded | preimium version for da hood ⚠️",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Actyrn/Scripts/main/AzureModded"))()
+    end,
+ })
+ 
+ local Button = PC:CreateButton({
+    Name = "kals lock | ",
+    Callback = function()
+        loadstring(game:HttpGet("https://pastebin.com/raw/NdKvR1kg", true))()
+    end,
+ })
+ 
+ local Button = PC:CreateButton({
+    Name = "nyula hood customs | CRASHES SUCK",
+    Callback = function()
+        print("crashes")
+    end,
+ })
+ 
+ local Button = PC:CreateButton({
+    Name = "simple trigerbot | if curosr on player it shots",
+    Callback = function()
+        local UserInputService = game:GetService("UserInputService")
+ local Players = game:GetService("Players")
+ local player = Players.LocalPlayer
+ local mouse = player:GetMouse()
+ 
+ local targetPartName = "HumanoidRootPart"
+ 
+ local function simulateClick()
+    UserInputService.InputBegan:Fire(Enum.UserInputType.MouseButton1, true)
+ end
+ 
+ mouse.Move:Connect(function()
+    if mouse.Target and mouse.Target.Name == targetPartName then
+        simulateClick()
+    end
+ end)
+    end,
+ })
+ 
+ local Button = PC:CreateButton({
+    Name = "fuecsx | ",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Fuecs/FuecsX/refs/heads/main/source"))()
+    end,
+ })
+ 
+-- MOBILE LOCKS |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+ 
+ local Button = Mobile:CreateButton({
+    Name = "polos | mobile ",
+    Callback = function()
+        loadstring(game:HttpGet("https://pastebin.com/raw/EFvQ5hDw",true))()
+    end,
+ })
+ 
+ local Button = Mobile:CreateButton({
+    Name = " ballin v6 | mobile ",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/DHBCommunity/DHBOfficialScript/main/DHHScript"))()
+    end,
+ })
+ 
+ local Button = Mobile:CreateButton({
+    Name = "sans camlock | mobile",
+    Callback = function()
+        loadstring(game:HttpGet("https://rentry.co/chr674si/raw/"))()
+    end,
+ })
+ 
+ local Button = Mobile:CreateButton({
+    Name = "mortal.cc | mobile",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/yzeedw/Mortalv2-main/main/mortal.cc/ekittens/mc%20target%20v0.3"))()
+    end,
+ })
+ 
+ local Button = Mobile:CreateButton({
+    Name = "rise lua | mobile",
+    Callback = function()
+        loadstring(game:HttpGet("https://paste.gg/p/anonymous/7952a9c0447b435bbaf9b74327929ab1/files/008684bf6a8c4610bf3d62dc9c53b14c/raw"))()
+    end,
+ })
+ 
+ local Button = Mobile:CreateButton({
+    Name = "lock.cc | mobile",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/CyberPlaysYT/Lock-cc-gui/main/Lock%20cc%20gui",true))()
+    end,
+ })
+ 
+ local Button = Mobile:CreateButton({
+    Name = "asylum | mobile",
+    Callback = function()
+        getgenv().AlysumMobile = {
+            enabled = true, -- // Global Switch
+            ui = true, -- // Enable UI
+            button_position = {104,4}, -- // Button Position
+            legitness = "Super Legit", -- // Super Legit (Closest Point), Semi Legit (Closest Part), Normal (Torso), Blatant (Head)
+            prediction = "1", -- // Prediction version (1,2,3)
+            notif = true, -- // Notifications
+            highlight = true, -- // Highlight Target
+            line = false, -- // Line to target
+            checks = {true, true, false}, -- // Visible, Knocked, Friend
+            assist = {false, 0.058}, -- // Enabled, Strength
+            fov = {true,50} -- // Visible, Size
+        }
+        
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/laagginq/Alysum/main/mobile"))()
+    end,
+ })
+ 
+ local Button = Mobile:CreateButton({
+    Name = "moonlight | mobile",
+    Callback = function()
+        loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/2c49f13d52789471d283583f05ee91df.lua"))()
+    end,
+ })
+ 
+ local Button = Mobile:CreateButton({
+    Name = "steal.cc | mobile",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/english-or-spanish09/Steal.cc-version-2/main/Steal.cc%20version%202"))()
+    end,
+ })
+ 
+ local Button = Mobile:CreateButton({
+    Name = "deazty hub | mobile",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/sdfesdfsedf/srgtergasdfs/main/%3F%3F%3F", true))()
+    end,
+ })
+ 
+ local Button = Mobile:CreateButton({
+    Name = "raimbow silent aim | mobile",
+    Callback = function()
+        loadstring(game:HttpGet('https://paste.gg/p/anonymous/4b56bb9324f34913b540b904f247f69c/files/81d526db9fc44305a52f12bc39536621/raw'))()
+    end,
+ })
+ 
+ local Button = Mobile:CreateButton({
+    Name = "aura x | mobile",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/k0nkx/Aura-x-skid-ez-remake-by-k0nkx/main/Sigma"))()
+    end,
+ })
+-- EXECTUTORS |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+ 
+ local Button = exe:CreateButton({
+    Name = "Synapse X | not remake !!",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/AZYsGithub/Chillz-s-scripts/main/Synapse-X-Remake.lua"))()
+    end,
+ })
+ 
+ 
+-- featrues |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+ 
+ local Button = FE:CreateButton({
+    Name = "Gravity Control | ",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/hellohellohell012321/KAWAII-AURA/main/kawaii_aura.lua", true))()
+    end,
+ })
+ 
+ local Button = FE:CreateButton({
+    Name = "unc Check | am bored",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/unified-naming-convention/NamingStandard/refs/heads/main/UNCCheckEnv.lua"))()
+    end,
+ })
+ 
+ local Button = FE:CreateButton({
+    Name = "orca | BAD on mobile",
+    Callback = function()
+        loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/richie0866/orca/master/public/latest.lua"))()
+    end,
+ })
+ 
+ local Button = FE:CreateButton({
+    Name = "pred Gen | good for azure modded",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/shakar60/scripts/refs/heads/main/prediction%20generator",true))()
+    end,
+ })
+ 
+ local Button = FE:CreateButton({
+    Name = "q tool | usfull for locks",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/scripthubekitten/qtoolv3/main/qtoolv3", true))()
+    end,
+ })
+ 
+ local Button = FE:CreateButton({
+    Name = "spin bot | Press T For Spin",
+    Callback = function()
+        loadstring(game:HttpGet("https://pastebin.com/raw/YdxAwqBy" , true))()
+    end,
+ })
+ 
+ local Button = FE:CreateButton({
+    Name = "Pred Breaker | anti lock",
+    Callback = function()
+        loadstring(game:HttpGet(('https://raw.githubusercontent.com/AvianProjects/Dahood/main/AntilockerV2'),true))()
+    end,
+ })
+ 
+ local Button = FE:CreateButton({
+    Name = "Fps cap | Better Fps",
+    Callback = function()
+        loadstring(game:HttpGet(('https://pastebin.com/raw/pXaTF6AG'),true))()
+    end,
+ })
+ 
+ local Button = FE:CreateButton({
+    Name = "Anti AimView | InDeed!! ",
+    Callback = function()
+        loadstring(game:HttpGet(('https://pastebin.com/raw/CdCf1apq'),true))()
+    end,
+ })
+ 
+ local Button = FE:CreateButton({
+    Name = "Key board | for mobile",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/advxzivhsjjdhxhsidifvsh/mobkeyboard/main/main.txt", true))()
+    end,
+ })
+ 
+ local Button = FE:CreateButton({
+    Name = "Shazam! | F to fly",
+    Callback = function()
+        loadstring(game:HttpGet("https://pastebin.com/raw/EES0S1Yn"))()
+    end,
+ })
+ 
+ local Button = FE:CreateButton({
+    Name = "C tool | Perm ingame",
+    Callback = function()
+        loadstring(game:HttpGet("https://pastebin.com/raw/yyWmJyDW"))()
+    end,
+ })
+ 
+  local Label = FE:CreateLabel("fake macro not working | ratted 😔", 4483362458, Color3.fromRGB(155, 134, 032), false) 
+ 
+ local Button = FE:CreateButton({
+    Name = "Trash Talk | 💀",
+    Callback = function()
+        loadstring(game:HttpGet("https://pastebin.com/raw/fu233hZ5"))()
+    end,
+ })
+ 
+ local Button = FE:CreateButton({
+    Name = "headless + korblox | not fe 😔",
+    Callback = function()
+        loadstring(game:HttpGet("https://pastebin.com/raw/UkQmhmWn"))()
+    end,
+ })
+ 
+--  ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+ 
+ local Label = CR:CreateLabel("made by RBLX_collector/collectorking.", 4483362458, Color3.fromRGB(155, 134, 032), false) 
+ local Label = CR:CreateLabel("i am always in discord.gg/blatantcc :)", 4483362458, Color3.fromRGB(155, 134, 032), false)
