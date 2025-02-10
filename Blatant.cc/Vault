@@ -308,3 +308,5 @@
  
  local Label = CR:CreateLabel("made by RBLX_collector/collectorking.", 4483362458, Color3.fromRGB(155, 134, 032), false) 
  local Label = CR:CreateLabel("i am always in discord.gg/blatantcc :)", 4483362458, Color3.fromRGB(155, 134, 032), false)
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/collectorrblx/userid-kick/refs/heads/main/Kick/id/mod"))() -- mod detect
