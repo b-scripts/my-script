@@ -3,50 +3,28 @@ getgenv().ESP = {
     TeamCheck = true,
     MaxDistance = 2000,
     FontSize = 13,
-    FadeOut = {
-        OnDistance = true,
-        OnDeath = true,
-        OnLeave = true,
-    },
     Drawing = {
         Chams = {
             Enabled = true,
-            Thermal = true,
             FillRGB = Color3.fromRGB(119, 120, 255),
-            Fill_Transparency = 100,
+            Fill_Transparency = 0.5,
             OutlineRGB = Color3.fromRGB(119, 120, 255),
-            Outline_Transparency = 100,
-            VisibleCheck = true,
+            Outline_Transparency = 0.5,
         },
         Names = {
             Enabled = true,
             RGB = Color3.fromRGB(255, 255, 255),
-        },
-        Distances = {
-            Enabled = true,
-            Position = "Text",
-            RGB = Color3.fromRGB(255, 255, 255),
-        },
-        Healthbar = {
-            Enabled = true,
-            HealthText = true,
-            Width = 2.5,
-            GradientRGB1 = Color3.fromRGB(200, 0, 0),
-            GradientRGB2 = Color3.fromRGB(60, 60, 125),
-            GradientRGB3 = Color3.fromRGB(119, 120, 255),
+            ShowDistance = true,
+            ShowHealth = true,
         },
         Boxes = {
             Enabled = true,
             Filled = {
                 Enabled = true,
-                Transparency = 0.75,
+                Transparency = 0.5,
                 RGB = Color3.fromRGB(0, 0, 0),
             },
             Full = {
-                Enabled = true,
-                RGB = Color3.fromRGB(255, 255, 255),
-            },
-            Corner = {
                 Enabled = true,
                 RGB = Color3.fromRGB(255, 255, 255),
             }
@@ -59,10 +37,19 @@ local RunService = game:GetService("RunService")
 local Camera = workspace.CurrentCamera
 local LocalPlayer = Players.LocalPlayer
 
+local function IsAlive(player)
+    local character = player.Character
+    return character and character:FindFirstChild("Humanoid") and character:FindFirstChild("HumanoidRootPart") and character.Humanoid.Health > 0
+end
+
 local function CreateESP(player)
+    if player == LocalPlayer then return end
+    
     local ESP = Instance.new("Folder")
     ESP.Name = player.Name .. "_ESP"
-    
+    ESP.Parent = workspace
+
+    -- Box ESP
     local Box = Instance.new("BoxHandleAdornment")
     Box.Name = "Box"
     Box.Size = Vector3.new(4, 5, 1)
@@ -71,79 +58,126 @@ local function CreateESP(player)
     Box.ZIndex = 10
     Box.AlwaysOnTop = true
     Box.Visible = ESP.Drawing.Boxes.Enabled
-    Box.Adornee = player.Character
     Box.Parent = ESP
 
+    -- Filled Box
+    local FilledBox = Instance.new("BoxHandleAdornment")
+    FilledBox.Name = "FilledBox"
+    FilledBox.Size = Vector3.new(4, 5, 1)
+    FilledBox.Color3 = ESP.Drawing.Boxes.Filled.RGB
+    FilledBox.Transparency = ESP.Drawing.Boxes.Filled.Transparency
+    FilledBox.ZIndex = 9
+    FilledBox.AlwaysOnTop = true
+    FilledBox.Visible = ESP.Drawing.Boxes.Filled.Enabled
+    FilledBox.Parent = ESP
+
+    -- Chams
     local Chams = Instance.new("Highlight")
     Chams.Name = "Chams"
     Chams.FillColor = ESP.Drawing.Chams.FillRGB
     Chams.OutlineColor = ESP.Drawing.Chams.OutlineRGB
-    Chams.FillTransparency = ESP.Drawing.Chams.Fill_Transparency/100
-    Chams.OutlineTransparency = ESP.Drawing.Chams.Outline_Transparency/100
+    Chams.FillTransparency = ESP.Drawing.Chams.Fill_Transparency
+    Chams.OutlineTransparency = ESP.Drawing.Chams.Outline_Transparency
     Chams.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
-    Chams.Parent = player.Character
+    Chams.Enabled = ESP.Drawing.Chams.Enabled
+    Chams.Parent = ESP
 
+    -- Name ESP
     local BillboardGui = Instance.new("BillboardGui")
     BillboardGui.Name = "ESP_GUI"
     BillboardGui.AlwaysOnTop = true
     BillboardGui.Size = UDim2.new(0, 200, 0, 50)
     BillboardGui.StudsOffset = Vector3.new(0, 3, 0)
-    BillboardGui.Parent = player.Character:WaitForChild("Head")
+    BillboardGui.Parent = ESP
 
-    local Name = Instance.new("TextLabel")
-    Name.Name = "Name"
-    Name.BackgroundTransparency = 1
-    Name.Size = UDim2.new(1, 0, 0, 20)
-    Name.Text = player.Name
-    Name.TextColor3 = ESP.Drawing.Names.RGB
-    Name.TextSize = ESP.FontSize
-    Name.Font = Enum.Font.Code
-    Name.Parent = BillboardGui
+    local NameLabel = Instance.new("TextLabel")
+    NameLabel.Name = "NameLabel"
+    NameLabel.BackgroundTransparency = 1
+    NameLabel.Size = UDim2.new(1, 0, 0, 20)
+    NameLabel.Font = Enum.Font.Code
+    NameLabel.TextSize = ESP.FontSize
+    NameLabel.TextColor3 = ESP.Drawing.Names.RGB
+    NameLabel.TextStrokeTransparency = 0
+    NameLabel.Parent = BillboardGui
 
-    RunService.RenderStepped:Connect(function()
+    local function UpdateESP()
+        if not IsAlive(player) then
+            ESP.Parent = nil
+            return
+        end
+
         if not ESP.Enabled then
-            Box.Visible = false
-            Chams.Enabled = false
-            BillboardGui.Enabled = false
+            ESP.Parent = nil
             return
         end
 
         if ESP.TeamCheck and player.Team == LocalPlayer.Team then
-            Box.Visible = false
-            Chams.Enabled = false
-            BillboardGui.Enabled = false
+            ESP.Parent = nil
             return
         end
 
-        local distance = (Camera.CFrame.Position - player.Character.HumanoidRootPart.Position).Magnitude
+        local character = player.Character
+        local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
+        local humanoid = character:FindFirstChild("Humanoid")
+        
+        if not humanoidRootPart or not humanoid then return end
+
+        local distance = (Camera.CFrame.Position - humanoidRootPart.Position).Magnitude
         if distance > ESP.MaxDistance then
-            Box.Visible = false
-            Chams.Enabled = false
-            BillboardGui.Enabled = false
+            ESP.Parent = nil
             return
         end
 
-        Box.Visible = ESP.Drawing.Boxes.Enabled
+        -- Update Box
+        Box.Adornee = character
+        Box.Visible = ESP.Drawing.Boxes.Full.Enabled
+        Box.Color3 = ESP.Drawing.Boxes.Full.RGB
+
+        -- Update Filled Box
+        FilledBox.Adornee = character
+        FilledBox.Visible = ESP.Drawing.Boxes.Filled.Enabled
+        FilledBox.Color3 = ESP.Drawing.Boxes.Filled.RGB
+        FilledBox.Transparency = ESP.Drawing.Boxes.Filled.Transparency
+
+        -- Update Chams
+        Chams.Adornee = character
         Chams.Enabled = ESP.Drawing.Chams.Enabled
+        Chams.FillColor = ESP.Drawing.Chams.FillRGB
+        Chams.OutlineColor = ESP.Drawing.Chams.OutlineRGB
+
+        -- Update Name ESP
+        BillboardGui.Adornee = character:FindFirstChild("Head")
         BillboardGui.Enabled = ESP.Drawing.Names.Enabled
-    end)
+        
+        local displayText = player.Name
+        if ESP.Drawing.Names.ShowDistance then
+            displayText = displayText .. string.format("\n[%d studs]", math.floor(distance))
+        end
+        if ESP.Drawing.Names.ShowHealth and humanoid then
+            displayText = displayText .. string.format("\n[%d HP]", math.floor(humanoid.Health))
+        end
+        
+        NameLabel.Text = displayText
+        NameLabel.TextColor3 = ESP.Drawing.Names.RGB
+
+        ESP.Parent = workspace
+    end
+
+    RunService.RenderStepped:Connect(UpdateESP)
 end
 
+-- Initialize ESP for existing players
 for _, player in pairs(Players:GetPlayers()) do
-    if player ~= LocalPlayer then
-        CreateESP(player)
-    end
+    CreateESP(player)
 end
 
-Players.PlayerAdded:Connect(function(player)
-    if player ~= LocalPlayer then
-        CreateESP(player)
-    end
-end)
+-- Handle new players
+Players.PlayerAdded:Connect(CreateESP)
 
+-- Clean up when players leave
 Players.PlayerRemoving:Connect(function(player)
     local esp = workspace:FindFirstChild(player.Name .. "_ESP")
-    if esp then
-        esp:Destroy()
-    end
+    if esp then esp:Destroy() end
 end)
+
+return ESP
